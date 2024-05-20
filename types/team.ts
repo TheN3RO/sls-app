@@ -13,5 +13,6 @@ export interface Player {
 export interface Team {
     name: string;
     school: string;
+    index: number;
     team: Player[];
 }

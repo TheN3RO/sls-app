@@ -1,140 +1,98 @@
+import { Player, Team } from "@/types/team";
+import { copyFileSync } from "fs";
 
+function generateMeetingCombinations(teams: Team[]): [Team, Team][][] {
+    const meetings: [Team, Team][][] = [];
 
-export const groups: Team[] = [
-    {
-        name: "Elektryk",
-        school: 'Zespół Szkół "Elektryk" im. Noblistów Polskich w Słupsku',
-        team: [
-            { name: "Patryk", surname: "Gliwiński", class: 2, age: 16, email: "patryk@gmail.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Michał", surname: "Bilik", class: 3, age: 17, email: "michal@gmail.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Anna", surname: "Prus", class: 1, age: 15, email: "anna@gmail.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Miłosz", surname: "Bieszczak", class: 3, age: 16, email: "milosz@gmail.com", points: 0, games: 0, wins: 0, loses: 0},
-        ],     
-    },
-    {
-        name: "Mechanik",
-        school: 'Zespół Szkół "Mechanik" im. Tadeusza Kościuszki w Krakowie',
-        team: [
-            { name: "Adam", surname: "Nowak", class: 2, age: 16, email: "adam.nowak@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Ewa", surname: "Kowalska", class: 3, age: 17, email: "ewa.kowalska@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Piotr", surname: "Wiśniewski", class: 1, age: 15, email: "piotr.wisniewski@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Karolina", surname: "Lewandowska", class: 3, age: 16, email: "karolina.lewandowska@example.com", points: 0, games: 0, wins: 0, loses: 0}
-        ]
-    },
-    {
-        name: "Informatyk",
-        school: 'Zespół Szkół "Informatyk" im. Marii Skłodowskiej-Curie w Gdańsku',
-        team: [
-            { name: "Jakub", surname: "Kaczmarek", class: 2, age: 16, email: "jakub.kaczmarek@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Natalia", surname: "Woźniak", class: 3, age: 17, email: "natalia.wozniak@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Marta", surname: "Dąbrowska", class: 1, age: 15, email: "marta.dabrowska@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Kamil", surname: "Mazur", class: 3, age: 16, email: "kamil.mazur@example.com", points: 0, games: 0, wins: 0, loses: 0}
-        ]
-    },
-    {
-        name: "Budowlaniec",
-        school: 'Zespół Szkół Budowlanych im. Stefana Bryły w Warszawie',
-        team: [
-            { name: "Weronika", surname: "Jankowska", class: 2, age: 16, email: "weronika.jankowska@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Mateusz", surname: "Zieliński", class: 3, age: 17, email: "mateusz.zielinski@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Julia", surname: "Szymańska", class: 1, age: 15, email: "julia.szymanska@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Krzysztof", surname: "Kowalczyk", class: 3, age: 16, email: "krzysztof.kowalczyk@example.com", points: 0, games: 0, wins: 0, loses: 0}
-        ]
-    },
-    {
-        name: "Ekonomista",
-        school: 'Zespół Szkół Ekonomicznych im. Jana Pawła II w Łodzi',
-        team: [
-            { name: "Magdalena", surname: "Wojciechowska", class: 2, age: 16, email: "magdalena.wojciechowska@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Łukasz", surname: "Kamiński", class: 3, age: 17, email: "lukasz.kaminski@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Agata", surname: "Nowakowska", class: 1, age: 15, email: "agata.nowakowska@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Bartosz", surname: "Lewandowski", class: 3, age: 16, email: "bartosz.lewandowski@example.com", points: 0, games: 0, wins: 0, loses: 0}
-        ]
-    },
-    {
-        name: "Rolnik",
-        school: 'Zespół Szkół Rolniczych im. Jana Kasprowicza w Poznaniu',
-        team: [
-            { name: "Dominika", surname: "Kowalczyk", class: 2, age: 16, email: "dominika.kowalczyk@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Marcin", surname: "Sobczak", class: 3, age: 17, email: "marcin.sobczak@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Karolina", surname: "Krawczyk", class: 1, age: 15, email: "karolina.krawczyk@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Tomasz", surname: "Zając", class: 3, age: 16, email: "tomasz.zajac@example.com", points: 0, games: 0, wins: 0, loses: 0}
-        ]
-    },
-    {
-        name: "Licealista",
-        school: 'I Liceum Ogólnokształcące im. Adama Mickiewicza w Wrocławiu',
-        team: [
-            { name: "Maciej", surname: "Adamczyk", class: 2, age: 16, email: "maciej.adamczyk@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Katarzyna", surname: "Kowalczyk", class: 3, age: 17, email: "katarzyna.kowalczyk@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Wojciech", surname: "Zając", class: 1, age: 15, email: "wojciech.zajac@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Paulina", surname: "Lewandowska", class: 3, age: 16, email: "paulina.lewandowska@example.com", points: 0, games: 0, wins: 0, loses: 0}
-        ]
-    },
-    {
-        name: "Humanista",
-        school: 'II Liceum Ogólnokształcące im. Jana Kochanowskiego w Lublinie',
-        team: [
-            { name: "Mikołaj", surname: "Nowak", class: 2, age: 16, email: "mikolaj.nowak@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Zofia", surname: "Kowalska", class: 3, age: 17, email: "zofia.kowalska@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Jan", surname: "Wiśniewski", class: 1, age: 15, email: "jan.wisniewski@example.com", points: 0, games: 0, wins: 0, loses: 0},
-            { name: "Aleksandra", surname: "Lis", class: 3, age: 16, email: "aleksandra.lis@example.com", points: 0, games: 0, wins: 0, loses: 0}
-        ]
-    }
-];
+    for (let i = 0; i < teams.length-1; i++) {
+        const roundMeetings: [Team, Team][] = [];
+        let teamHalf = teams.slice(0, teams.length / 2);
+        let teamSecondHalf = teams.slice(teams.length / 2, teams.length);
 
-function generateMatchCombinations(teams: Team[]): [Player, Player][] {
-    const matches: [Player, Player][] = [];
+        if (i > teamHalf.length-1) {
+            const halfLength = Math.floor(teamHalf.length / 2);
+            const firstHalfFirstArray = teamHalf.slice(0, halfLength);
+            const secondHalfFirstArray = i % 2 === 0 ? teamHalf.slice(halfLength) : teamHalf.slice(halfLength).reverse();
+            const firstHalfSecondArray = i % 2 === 0 ? teamSecondHalf.slice(0, halfLength) : teamSecondHalf.slice(0, halfLength).reverse();
+            const secondHalfSecondArray = teamSecondHalf.slice(halfLength);
 
-    for (let i = 0; i < teams.length; i++) {
-        for (let j = i + 1; j < teams.length; j++) {
-            for (const playerA of teams[i].team) {
-                for (const playerB of teams[j].team) {
-                    matches.push([playerA, playerB]);
+            let reshuffledHalfTeam = [...firstHalfFirstArray, ...secondHalfSecondArray];
+            let reshuffledSecondHalfTeam = [...firstHalfSecondArray, ...secondHalfFirstArray];
+
+            for (let j = 0; j < teamSecondHalf.length; j++) {
+                if (i === teams.length-1) {
+                    if (j < teamHalf.length) {
+                        roundMeetings.push([reshuffledHalfTeam[j], reshuffledHalfTeam[teamHalf.length-1-j]]);
+                        roundMeetings.push([reshuffledSecondHalfTeam[j], reshuffledSecondHalfTeam[teamHalf.length-1-j]]);
+                    }
+                } else {
+                    roundMeetings.push([reshuffledHalfTeam[j], reshuffledSecondHalfTeam[teamHalf.length-1-j]]);
+                    console.log((reshuffledHalfTeam[j].index+1)+" - "+(reshuffledSecondHalfTeam[teamHalf.length-1-j].index+1))
                 }
             }
+            console.log(reshuffledHalfTeam.map((team) => team.index+1))
+            console.log(reshuffledSecondHalfTeam.map((team) => team.index+1))
+            console.log("----")
+        } else {
+            teamSecondHalf = moveBy(teamSecondHalf, i);
+            for (let j = 0; j < teamHalf.length; j++) {
+                roundMeetings.push([teamHalf[j], teamSecondHalf[(teamHalf.length-1-j)]]);
+            }    
         }
+        meetings.push(roundMeetings);
     }
 
-    return matches;
+    return meetings;
+
+    function moveBy(array: Team[], positions: number): Team[] {
+        const newArray = [...array];
+        for(let i = 0; i < positions; i++) {
+            const last = newArray.pop() as Team; // Add type assertion here
+            newArray.unshift(last);
+        }
+        return newArray;
+    }
 }
 
-function rotateTeams(teams: Team[]): Team[] {
-    const rotatedTeams = [...teams];
-    const firstTeam = rotatedTeams.shift()!;
-    rotatedTeams.push(firstTeam);
-    return rotatedTeams;
-}
+function generateMatchCombinations(matchedTeams: [Team, Team][][], meeting: number): [Player, Player][][] {
+    const matches: [Player, Player][][] = []
 
-function assignMatchesForRound(teams: Team[]): [Player, Player][][] {
-    const matches: [Player, Player][][] = [];
-
-    const totalRounds = teams.length - 1;
-    const matchCombinations = generateMatchCombinations(teams);
-
-    for (let round = 0; round < totalRounds; round++) {
+    for (let i = 0; i < matchedTeams.length; i++) {
         const roundMatches: [Player, Player][] = [];
-
-        for (const match of matchCombinations) {
-            roundMatches.push(match);
+        for (const [teamA, teamB] of matchedTeams[i]) {
+            for (let j = 0; j < 4; j++) {
+                roundMatches.push([teamA.team[j], teamB.team[j+1 > 3 ? 0 : j+1 ]]);
+            }
         }
 
         matches.push(roundMatches);
-        teams = rotateTeams(teams);
     }
 
     return matches;
 }
 
-// Assign matches for 4 meetings
-const meetings = 4;
-for (let i = 0; i < meetings; i++) {
-    const roundMatches = assignMatchesForRound(groups);
-    console.log(`Round ${i + 1}:`);
-    roundMatches.forEach((matches, index) => {
-        console.log(`  Match ${index + 1}:`);
-        matches.forEach(([playerA, playerB]) => {
-            console.log(`    ${playerA.name} ${playerA.surname} vs ${playerB.name} ${playerB.surname}`);
-        });
-    });
+function shuffleOrder(meetings: [Team, Team][]): [Team, Team][] {
+    for (let i = meetings.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [meetings[i], meetings[j]] = [meetings[j], meetings[i]];
+    }
+    return meetings;
 }
+
+export function assignMatchesForRound(teams: Team[], meeting: number): [Player, Player][][] {
+
+    const meetingCombinations = generateMeetingCombinations(teams);
+    // for (const meeting of meetingCombinations) {
+    //     for (const match of meeting) {
+    //         console.log((match[0].index+1)+" - "+(match[1].index+1))
+    //         // for (const [teamA, teamB] of match) {
+    //         //     console.log(teamA.matchA, teamB.matchB);
+    //         // }
+    //     }     
+    //     console.log("----")
+    // }
+    const matchCombinations = generateMatchCombinations(meetingCombinations, meeting);
+
+    return matchCombinations;
+}
+

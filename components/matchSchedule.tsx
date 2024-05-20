@@ -1,26 +1,25 @@
-import React from 'react';
+import { Groups } from '@/constants';
+import { Player } from '@/types/team';
+import { assignMatchesForRound } from '@/utils/matchEngine';
+import React from 'react'
 import MatchScheduleTable from './matchScheduleTable';
-import { groups, assignMatchesForRound } from '../utils/matchEngine'; // Import your data and functions
 
-const MatchSchedule: React.FC = () => {
-    const meetings = 4;
-    let allMatches: [Player, Player][][] = [];
+const MatchSchedule = () => {
+  const meetings = 4;
+  let allMatches: [Player, Player][][] = [];
 
-    for (let i = 0; i < meetings; i++) {
-        const roundMatches = assignMatchesForRound(groups);
-        allMatches = allMatches.concat(roundMatches);
-    }
+  const roundMatches = assignMatchesForRound(Groups, 0);
 
-    return (
-        <div>
-            {allMatches.map((roundMatches, index) => (
-                <div key={`meeting-${index}`}>
-                    <h2>Meeting {index + 1}</h2>
-                    <MatchScheduleTable roundMatches={roundMatches} />
-                </div>
-            ))}
-        </div>
-    );
-};
+  return (
+      <div>
+          {roundMatches.map((roundMatches, index) => (
+              <div key={`meeting-${index}`}>
+                  <h2>Spotkanie {index + 1}</h2>
+                  <MatchScheduleTable roundMatches={[roundMatches]} />
+              </div>
+          ))}
+      </div>
+  );
+}
 
-export default MatchSchedule;
+export default MatchSchedule

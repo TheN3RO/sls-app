@@ -1,10 +1,10 @@
-import { Teams } from "@/components";
+import { MatchSchedule } from "@/components";
 
 
 export default function Home() {
   return (
     <main>
-      <Teams />
+      <MatchSchedule />
     </main>
   );
 }

@@ -1,10 +1,11 @@
-import React from 'react';
+import { Player } from '@/types/team';
+import React from 'react'
 
 interface Props {
-    roundMatches: [Player, Player][][];
+  roundMatches: [Player, Player][][]
 }
 
-const MatchScheduleTable: React.FC<Props> = ({ roundMatches }) => {
+const MatchScheduleTable: React.FC<Props> = ({roundMatches}) => {
     return (
         <table>
             <thead>
@@ -27,6 +28,6 @@ const MatchScheduleTable: React.FC<Props> = ({ roundMatches }) => {
             </tbody>
         </table>
     );
-};
+}
 
-export default MatchScheduleTable;
+export default MatchScheduleTable
