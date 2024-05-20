@@ -1,5 +1,4 @@
 import { Player, Team } from "@/types/team";
-import { copyFileSync } from "fs";
 
 function generateMeetingCombinations(teams: Team[]): [Team, Team][][] {
     const meetings: [Team, Team][][] = [];
@@ -10,29 +9,20 @@ function generateMeetingCombinations(teams: Team[]): [Team, Team][][] {
         let teamSecondHalf = teams.slice(teams.length / 2, teams.length);
 
         if (i > teamHalf.length-1) {
-            const halfLength = Math.floor(teamHalf.length / 2);
-            const firstHalfFirstArray = teamHalf.slice(0, halfLength);
-            const secondHalfFirstArray = i % 2 === 0 ? teamHalf.slice(halfLength) : teamHalf.slice(halfLength).reverse();
-            const firstHalfSecondArray = i % 2 === 0 ? teamSecondHalf.slice(0, halfLength) : teamSecondHalf.slice(0, halfLength).reverse();
-            const secondHalfSecondArray = teamSecondHalf.slice(halfLength);
+            const firstHalfKey = teamHalf.slice(0, 1);
+            const secondHalfKey = teamSecondHalf.slice(0, 1);
+            const firstHalfValues = moveBy(teamHalf.slice(1), i-teamHalf.length);
+            const secondHalfValues = moveBy(teamSecondHalf.slice(1), i-teamHalf.length);
 
-            let reshuffledHalfTeam = [...firstHalfFirstArray, ...secondHalfSecondArray];
-            let reshuffledSecondHalfTeam = [...firstHalfSecondArray, ...secondHalfFirstArray];
+            const resheduledFirstHalf = [...firstHalfKey, ...firstHalfValues];
+            const resheduledSecondHalf = [...secondHalfKey, ...secondHalfValues];
 
-            for (let j = 0; j < teamSecondHalf.length; j++) {
-                if (i === teams.length-1) {
-                    if (j < teamHalf.length) {
-                        roundMeetings.push([reshuffledHalfTeam[j], reshuffledHalfTeam[teamHalf.length-1-j]]);
-                        roundMeetings.push([reshuffledSecondHalfTeam[j], reshuffledSecondHalfTeam[teamHalf.length-1-j]]);
-                    }
-                } else {
-                    roundMeetings.push([reshuffledHalfTeam[j], reshuffledSecondHalfTeam[teamHalf.length-1-j]]);
-                    console.log((reshuffledHalfTeam[j].index+1)+" - "+(reshuffledSecondHalfTeam[teamHalf.length-1-j].index+1))
-                }
+
+            // FIXME: NIE OBEJMUJE SYTUACJI Z NIEPARZYSTĄ ILOŚCIĄ DOPASOWANYCH DRUŻYN
+            for (let j = 0; j < resheduledFirstHalf.length; j+=2) {
+                roundMeetings.push([resheduledFirstHalf[j], resheduledFirstHalf[j+1]]);
+                roundMeetings.push([resheduledSecondHalf[j], resheduledSecondHalf[j+1]]);
             }
-            console.log(reshuffledHalfTeam.map((team) => team.index+1))
-            console.log(reshuffledSecondHalfTeam.map((team) => team.index+1))
-            console.log("----")
         } else {
             teamSecondHalf = moveBy(teamSecondHalf, i);
             for (let j = 0; j < teamHalf.length; j++) {
@@ -82,15 +72,12 @@ function shuffleOrder(meetings: [Team, Team][]): [Team, Team][] {
 export function assignMatchesForRound(teams: Team[], meeting: number): [Player, Player][][] {
 
     const meetingCombinations = generateMeetingCombinations(teams);
-    // for (const meeting of meetingCombinations) {
-    //     for (const match of meeting) {
-    //         console.log((match[0].index+1)+" - "+(match[1].index+1))
-    //         // for (const [teamA, teamB] of match) {
-    //         //     console.log(teamA.matchA, teamB.matchB);
-    //         // }
-    //     }     
-    //     console.log("----")
-    // }
+    for (const meeting of meetingCombinations) {
+        for (const match of meeting) {
+            console.log((match[0].index+1)+" - "+(match[1].index+1))
+        }     
+        console.log("----")
+    }
     const matchCombinations = generateMatchCombinations(meetingCombinations, meeting);
 
     return matchCombinations;
