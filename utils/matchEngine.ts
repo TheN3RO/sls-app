@@ -1,3 +1,4 @@
+import { meetingCombinations } from "@/constants";
 import { Player, Team } from "@/types/team";
 
 function generateMeetingCombinations(teams: Team[]): [Team, Team][][] {
@@ -61,6 +62,21 @@ function generateMatchCombinations(matchedTeams: [Team, Team][][], meeting: numb
     return matches;
 }
 
+function loadMeetingCombinations(combinations: [number, number][][], teams: Team[]): [Team, Team][][] {
+    const meetingMatches: [Team, Team][][] = [];
+
+    for (let round of combinations) {
+        const roundMatches: [Team, Team][] = [];
+        for (let match of round) {
+            // Subtract 1 from match[0] and match[1] because array indices start from 0
+            roundMatches.push([teams[match[0] - 1], teams[match[1] - 1]]);
+        }
+        meetingMatches.push(roundMatches);
+    }
+
+    return meetingMatches;
+}
+
 function shuffleOrder(meetings: [Team, Team][]): [Team, Team][] {
     for (let i = meetings.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -69,17 +85,10 @@ function shuffleOrder(meetings: [Team, Team][]): [Team, Team][] {
     return meetings;
 }
 
-export function assignMatchesForRound(teams: Team[], meeting: number): [Player, Player][][] {
+export function assignMatchesForRound(teams: Team[], meetingsNum: number): [Player, Player][][] {
 
-    const meetingCombinations = generateMeetingCombinations(teams);
-    for (const meeting of meetingCombinations) {
-        for (const match of meeting) {
-            console.log((match[0].index+1)+" - "+(match[1].index+1))
-        }     
-        console.log("----")
-    }
-    const matchCombinations = generateMatchCombinations(meetingCombinations, meeting);
+    const meeting = loadMeetingCombinations(meetingCombinations, teams);
+    const matchCombinations = generateMatchCombinations(meeting, meetingsNum);
 
     return matchCombinations;
 }
-
