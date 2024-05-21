@@ -3,6 +3,7 @@ import { Player } from '@/types/team';
 import { assignMatchesForRound } from '@/utils/matchEngine';
 import React from 'react'
 import MatchScheduleTable from './matchScheduleTable';
+import { Box } from '@chakra-ui/react';
 
 const MatchSchedule = () => {
     const meetings = 4;
@@ -14,14 +15,14 @@ const MatchSchedule = () => {
     }
 
   return (
-      <div className='container mx-auto px-4 bg-gradient-to-r from-cyan-500 to-fuchsia-500'>
+      <Box className='container mx-auto text-black'>
           {allMatches.map((meeting, index) => (
               <div className='w-100' key={`meeting-${index}`}>
                   <h1>Spotkanie {index + 1}</h1>
                   <MatchScheduleTable meetingMatches={[meeting]} />
               </div>
           ))}
-      </div>
+      </Box>
   );
 }
 
