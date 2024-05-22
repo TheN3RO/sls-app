@@ -52,7 +52,7 @@ function generateMatchCombinations(matchedTeams: [Team, Team][][], meeting: numb
         const roundMatches: [Player, Player][] = [];
         for (const [teamA, teamB] of matchedTeams[i]) {
             for (let j = 0; j < 4; j++) {
-                roundMatches.push([teamA.team[j], teamB.team[j+1 > 3 ? 0 : j+1 ]]);
+                roundMatches.push([teamA.team[j], teamB.team[(j+meeting) % 4]]);
             }
         }
 
