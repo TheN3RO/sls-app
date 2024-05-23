@@ -6,8 +6,8 @@ import CustomButton from './customButton'
 import { Playfair_Display, Quicksand, Roboto } from 'next/font/google';
 import styles from '@/styles/Header.module.css';
 
-const roboto = Quicksand({
-  weight: ['300'],
+const quicksand = Quicksand({
+  weight: ['400'],
   style: ['normal'],
   subsets: ['latin'],
   display: 'swap',
@@ -21,7 +21,8 @@ const Header = () => {
       <div className='container mx-auto flex items-center'>
         <div className='flex'>
           <Image src='/sls-logo.svg' alt='logo' width={56} height={56} className='p-2' />
-          <h1 className={`tracking-wider text-black italic ${roboto.className, styles.logoText}`}>SLS</h1>
+          <Image src='/sls-text-logo.svg' alt='logo-text' width={60} height={60} />
+          {/* <h1 className={`tracking-wider text-white italic ${quicksand.className}`}>SLS</h1> */}
         </div>
         <div className='flex-1 mx-[48px]'>
           <ul className='list-none flex'>
