@@ -28,7 +28,7 @@ const MatchScheduleTable: React.FC<Props> = ({meetingMatches}) => {
                             <tbody className='border-collapse border border-slate-500 divide-y divide-dashed divide-gray-400'>
                             {matches.map((match, matchIndex) => (
                                 <tr key={`round-${roundIndex}-match-${matchIndex}`}>
-                                    {matchIndex === 0 && <td rowSpan={matches.length} className='text-center border border-gray-500 bg-[url("/dark-grid-pattern.jpg")]' style={{boxShadow: "-30px 0px 43px -9px rgba(78, 78, 97, 1)"}}>                                        <span className='text-4xl p-4 text-white'>{roundIndex + 1}</span>
+                                    {matchIndex === 0 && <td rowSpan={matches.length} className='text-center border border-gray-500 bg-[url("/background/dark-grid-pattern.jpg")]' style={{boxShadow: "-30px 0px 43px -9px rgba(78, 78, 97, 1)"}}>                                        <span className='text-4xl p-4 text-white'>{roundIndex + 1}</span>
                                     </td>}
                                     <td className='text-center text-lg'>{matchIndex + 1}</td>
                                     <td className='bg-white w-[20px] m-2 border border-gray-700'>
