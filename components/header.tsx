@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import React from 'react'
 import CustomButton from './customButton'
-import { Playfair_Display, Quicksand, Roboto } from 'next/font/google';
+import { Quicksand } from 'next/font/google';
 
 const quicksand = Quicksand({
   weight: ['400'],

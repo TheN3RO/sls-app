@@ -1,0 +1,11 @@
+.decorationBlurTiny {
+    filter: blur(1px);   
+}
+
+.decorationBlurSm {
+    filter: blur(2px);   
+}
+
+.decorationBlurMd {
+    filter: blur(2.5px);   
+}
