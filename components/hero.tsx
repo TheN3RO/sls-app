@@ -43,7 +43,7 @@ const Hero = () => {
         </div>
       </div>
       <div className='mx-auto'>
-        <Image src='/images/chess-image-with-jagged-edges-perfect-composition-beautiful-detailed-intricate-insanely-detailed-o (1).png' alt='decoration2' width={1200} height={480} className='rounded' />
+        <Image src='/images/chess-image-with-jagged-edges-perfect-composition-beautiful-detailed-intricate-insanely-detailed-o (1).png' alt='decoration2' width={1200} height={480} className='rounded-lg' />
       </div>
     </section>
   )

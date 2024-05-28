@@ -47,6 +47,8 @@ const config: Config = {
           DEFAULT: '#E6E600',
           dark: '#B3B300',
         },
+        chessLightBlock: '#f0d9b5',
+        chessDarkBlock: '#b58863',
       },      
     },
   },
