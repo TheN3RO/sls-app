@@ -1,31 +1,14 @@
-import React from 'react'
+import dynamic from 'next/dynamic';
+
+const ChessScene = dynamic(() => import('./chessAnimation'), { ssr: false }); 
 
 const ChessBoard = () => {
-
-
-
-  const renderSquares = () => {
-    const squares = [];
-    for (let row = 0; row < 8; row++) {
-      for (let col = 0; col < 8; col++) {
-        const isBlack = (row + col) % 2 === 1;
-        squares.push(
-          <div
-            key={`${row}-${col}`}
-            className={`w-full h-full ${isBlack ? 'bg-chessDarkBlock' : 'bg-chessLightBlock'} aspect-square`}>
-          </div>
-        );
-      }
-    }
-    return squares;
-  }
-  
   return (
-    <div className='bg-black flex justify-center items-center py-32'>
-      <div className='grid grid-cols-8 gap-0 w-full max-w-6xl aspect-square'>
-        {renderSquares()}
+    <section className='bg-black'>
+      <div className='h-[1000px]'>
+        <ChessScene />
       </div>
-    </div>
+    </section>
   )
 
     // const renderSquares = () => {

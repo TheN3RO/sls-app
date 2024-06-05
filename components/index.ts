@@ -4,6 +4,8 @@ import Footer from "./footer";
 import CustomButton from "./customButton";
 import Hero from "./hero";
 import Supporters from "./supporters";
+import ChessModel from "./chessModel";
+import ChessAnimation from "./chessAnimation";
 import ChessBoard from "./ChessBoard";
 import BaseInfo from "./baseInfo";
 import TournamentStages from "./tournamentStages";
@@ -14,6 +16,8 @@ export {
     Header,
     Hero,
     Supporters,
+    ChessModel,
+    ChessAnimation,
     ChessBoard,
     BaseInfo,
     TournamentStages,
