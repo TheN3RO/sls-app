@@ -6,3 +6,8 @@ export interface CustomButtonPops {
     containerStyles?: string;
     handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
+
+export type ChessModelProps = {
+    stage: number;
+    setStage: React.Dispatch<React.SetStateAction<number>>;
+  };

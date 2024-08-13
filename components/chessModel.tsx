@@ -1,5 +1,6 @@
 'use client';
 
+import { ChessModelProps } from "@/types";
 import { useAnimations, useGLTF, useScroll } from "@react-three/drei"
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
@@ -7,11 +8,11 @@ import * as THREE from 'three';
 
 useGLTF.preload('/chess_scene.glb');
 
-const ChessModel = () => {
-    const group = useRef<THREE.Group>(null);
-    const { nodes, materials, animations, scene } = useGLTF('/chess_scene.glb');
-    const { actions, clips } = useAnimations(animations, group);
-    const scroll = useScroll();
+const ChessModel: React.FC<ChessModelProps> = ({ stage, setStage }) => {
+  const group = useRef<THREE.Group>(null);
+  const { animations, scene } = useGLTF('/chess_scene.glb'); // Removed 'nodes' and 'materials'
+  const { actions } = useAnimations(animations, group); // Removed 'clips'
+  const scroll = useScroll();
 
     const { camera } = useThree();
 
@@ -21,15 +22,30 @@ const ChessModel = () => {
     }, [camera]);
 
     useEffect(() => {
-      console.log(actions)
       //@ts-ignore
       actions["Take 01"].play().paused = true
     }, [])
-    useFrame(
-      () => {
+    useFrame(() => {
         if (actions["Take 01"]) {
           //@ts-ignore
-          actions["Take 01"].time = (actions["Take 01"].getClip().duration * scroll.offset) / 1
+          const duration = actions["Take 01"].getClip().duration;
+          const offset = scroll.offset;
+          actions["Take 01"].time = (duration * offset) / 1;
+          
+          // Determine current stage
+          let newStage = 1;
+          if (offset < 0.4) {
+            newStage = 1;
+          } else if (offset < 0.8) {
+            newStage = 2;
+          } else {
+            newStage = 3;
+          }
+          
+          // Set the stage if it has changed
+          if (newStage !== stage) {
+            setStage(newStage);
+          }
           camera.position.lerp(new THREE.Vector3(0, 40 - scroll.offset * 10, 0), 0.05);
           camera.lookAt(new THREE.Vector3(0, 0, 0));
         }
