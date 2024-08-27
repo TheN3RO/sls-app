@@ -2,19 +2,10 @@
 
 import Image from 'next/image'
 import React from 'react'
-import CustomButton from './customButton'
-import { Quicksand } from 'next/font/google';
-
-const quicksand = Quicksand({
-  weight: ['400'],
-  style: ['normal'],
-  subsets: ['latin'],
-  display: 'swap',
-})
+import Link from 'next/link';
+import AccountBox from './accountBox';
 
 const Header = () => {
-  const handleLogin = () => {};
-
   return (
     <header className='bg-black text-neutral-400'>
       <div className='container mx-auto flex items-center'>
@@ -24,15 +15,12 @@ const Header = () => {
         </div>
         <div className='flex-1 mx-[48px]'>
           <ul className='list-none flex'>
-            <li className='mx-3 hover:text-white'>Home</li>
-            <li className='mx-3 hover:text-white'>Spotkania</li>
-            <li className='mx-3 hover:text-white'>Galeria</li>
+            <li className='mx-3 hover:text-white'><Link href="/">Home</Link></li>
+            <li className='mx-3 hover:text-white'><Link href="/meetings">Spotkania</Link></li>
+            <li className='mx-3 hover:text-white'><Link href="/gallery">Galeria</Link></li>
           </ul>
         </div>
-        <CustomButton 
-          title="Zaloguj się"
-          containerStyles="bg-gray-100 text-sm text-black rounded-md p-2"
-          handleClick={handleLogin}/>
+        <AccountBox />
       </div>
     </header>
   )

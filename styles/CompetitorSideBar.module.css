@@ -1,0 +1,7 @@
+.listItemTextShadow:hover {
+    text-shadow: 0px 0px 2px #ffffff;
+}
+
+.listItemTextShadowRed:hover {
+    text-shadow: 0px 0px 2px #ff0000;
+}

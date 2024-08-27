@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import CustomButton from './customButton'
+import CustomButton from '../common/customButton'
 
 const Newsletter = () => {
   return (

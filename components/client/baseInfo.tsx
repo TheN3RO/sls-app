@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaChess, FaListAlt } from 'react-icons/fa'
 import { GiTrophyCup } from 'react-icons/gi'
-import CustomButton from './customButton'
+import CustomButton from '../common/customButton'
 
 const BaseInfo = () => {
   return (

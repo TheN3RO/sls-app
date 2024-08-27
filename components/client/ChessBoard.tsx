@@ -9,6 +9,7 @@ const ChessBoard = () => {
   const [stage, setStage] = useState(1);
 
   const renderStageInfo = () => {
+    //FIXME: edit the subtitles on stages
     switch (stage) {
       case 1:
         return <div className='p-3 bg-black/75 text-white absolute top-10 left-0 w-[500px]'>

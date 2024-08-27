@@ -1,8 +1,10 @@
-import CustomButton from './customButton'
 import Image from 'next/image'
-import styles from '../styles/Hero.module.css'
+import styles from '../../styles/Hero.module.css'
+import { Button } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation';
 
 const Hero = () => {
+  const router = useRouter();
 
   return (
     <section className='bg-gradient-to-b from-black to-indigo-600 text-center flex justify-center flex-col'>
@@ -37,13 +39,22 @@ const Hero = () => {
           </code>
         </div>
         <div className='relative z-10'>
-          <CustomButton 
-            title="Zobacz spotkania"
-            containerStyles="bg-gray-100 text-black rounded-md p-2 mt-10 mb-5 content-between" />
+          <Button 
+            className='text-black rounded-md p-2 mt-10 mb-5'
+            onClick={() => {router.push('/meetings')}}>
+            Zobacz spotkania
+          </Button>
         </div>
       </div>
       <div className='mx-auto'>
-        <Image src='/images/chess-image-with-jagged-edges-perfect-composition-beautiful-detailed-intricate-insanely-detailed-o (1).png' alt='decoration2' width={1200} height={480} className='rounded-lg' />
+        <Image 
+          src='/images/chess-image-with-jagged-edges-perfect-composition-beautiful-detailed-intricate-insanely-detailed-o.png' 
+          alt='decoration2' 
+          width={1200} 
+          height={480} 
+          className={`rounded-lg ${styles.imageBorderAnimation}`} 
+          style={{ width: 'auto', height: 'auto' }}
+        />
       </div>
     </section>
   )

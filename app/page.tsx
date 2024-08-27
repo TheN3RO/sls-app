@@ -1,5 +1,6 @@
-import { BaseInfo, ChessBoard, Hero, MatchSchedule, Newsletter, Supporters, TournamentInfo, TournamentStages } from "@/components";
+"use client";
 
+import { BaseInfo, ChessBoard, Hero, Newsletter, Supporters, TournamentInfo, TournamentStages } from "@/components/client";
 
 export default function Home() {
   return (
@@ -11,7 +12,6 @@ export default function Home() {
       <TournamentStages />
       <TournamentInfo />
       <Newsletter />
-      <MatchSchedule />
     </main>
   );
 }

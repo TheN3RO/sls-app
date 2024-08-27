@@ -1,7 +1,4 @@
 import MatchSchedule from "./matchSchedule";
-import Header from "./header";
-import Footer from "./footer";
-import CustomButton from "./customButton";
 import Hero from "./hero";
 import Supporters from "./supporters";
 import ChessModel from "./chessModel";
@@ -11,9 +8,9 @@ import BaseInfo from "./baseInfo";
 import TournamentStages from "./tournamentStages";
 import TournamentInfo from "./tournamentInfo";
 import Newsletter from "./newsletter";
+import MatchScheduleTable from "./matchScheduleTable";
 
 export {
-    Header,
     Hero,
     Supporters,
     ChessModel,
@@ -23,7 +20,6 @@ export {
     TournamentStages,
     TournamentInfo,
     Newsletter,
-    Footer,
-    CustomButton,
     MatchSchedule,
+    MatchScheduleTable,
 }
