@@ -1,16 +1,14 @@
-"use client";
-
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { MdLogout, MdOutlineSchool, MdOutlineScoreboard, MdOutlineSpaceDashboard, MdPeopleOutline } from 'react-icons/md';
-import { PiGameControllerLight, PiRanking } from 'react-icons/pi';
+import { MdLogout, MdOutlineScoreboard, MdOutlineSpaceDashboard } from 'react-icons/md';
+import { PiRanking } from 'react-icons/pi';
 import { List, ListIcon, ListItem } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import styles from '../../../styles/SideBar.module.css';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-const AdminSideBar = ({ onSelect }: { onSelect: (page: string) => void }) => {
+const ModeratorSideBar = ({ onSelect }: { onSelect: (page: string) => void }) => {
   const router = useRouter();
 
   const [isHovered, setIsHovered] = useState(false);
@@ -18,9 +16,9 @@ const AdminSideBar = ({ onSelect }: { onSelect: (page: string) => void }) => {
 
   return (
     <motion.div
-      className='h-screen flex flex-col z-20'
+      className='h-screen flex flex-col'
       initial={{ width: '72px' }}
-      animate={{ width: isHovered ? '250px' : '72px',  }}
+      animate={{ width: isHovered ? '250px' : '72px', boxShadow: isHovered ? 'rgba(64, 64, 64, 0.25) 0px 54px 55px, rgba(64, 64, 64, 0.12) 0px -12px 30px, rgba(64, 64, 64, 0.12) 0px 4px 6px, rgba(64, 64, 64, 0.17) 0px 12px 13px, rgba(64, 64, 64, 0.09) 0px -3px 5px' : 'none' }}
       transition={{ duration: 0.3 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -49,29 +47,16 @@ const AdminSideBar = ({ onSelect }: { onSelect: (page: string) => void }) => {
       </div>
 
       <div className='flex-grow flex flex-col'>
-      <List spacing={5} className='w-full flex-grow flex flex-col m-5 relative z-10'>
-        <ListItem className={`flex items-center cursor-pointer hover:text-white group ${styles.listItemTextShadow}`}
-        onClick={() => onSelect('admin/Panel')}>
+      <List spacing={5} className='w-full flex-grow flex flex-col m-5'>
+        <ListItem className={`flex items-center hover:text-white group ${styles.listItemTextShadow}`}>
           <ListIcon as={MdOutlineSpaceDashboard} className='text-gray-300 group-hover:text-white' w={8} h={8} />
           {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Panel</span>}
         </ListItem>
-        <ListItem className={`flex items-center cursor-pointer hover:text-white group ${styles.listItemTextShadow}`}
-        onClick={() => onSelect('admin/Matches')}>
-          <ListIcon as={PiGameControllerLight} className='text-gray-300 group-hover:text-white' w={8} h={8} />
-          {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Mecze</span>}
+        <ListItem className={`flex items-center hover:text-white group ${styles.listItemTextShadow}`}>
+          <ListIcon as={MdOutlineScoreboard} className='text-gray-300 group-hover:text-white' w={8} h={8} />
+          {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Wyniki Grupy</span>}
         </ListItem>
-        <ListItem className={`flex items-center cursor-pointer hover:text-white group ${styles.listItemTextShadow}`}
-        onClick={() => onSelect('admin/Schools')}>
-          <ListIcon as={MdOutlineSchool} className='text-gray-300 group-hover:text-white' w={8} h={8} />
-          {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Szkoły</span>}
-        </ListItem>
-        <ListItem className={`flex items-center cursor-pointer hover:text-white group ${styles.listItemTextShadow}`}
-        onClick={() => onSelect('admin/Teams')}>
-          <ListIcon as={MdPeopleOutline} className='text-gray-300 group-hover:text-white' w={8} h={8} />
-          {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Drużyny</span>}
-        </ListItem>
-        <ListItem className={`flex items-center cursor-pointer hover:text-white group ${styles.listItemTextShadow}`}
-        onClick={() => onSelect('common/Ranking')}>
+        <ListItem className={`flex items-center hover:text-white group ${styles.listItemTextShadow}`}>
           <ListIcon as={PiRanking} className='text-gray-300 group-hover:text-white' w={8} h={8} />
           {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Ranking</span>}
         </ListItem>
@@ -97,4 +82,4 @@ const AdminSideBar = ({ onSelect }: { onSelect: (page: string) => void }) => {
   );
 };
 
-export default AdminSideBar;
+export default ModeratorSideBar;

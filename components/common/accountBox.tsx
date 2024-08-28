@@ -17,7 +17,7 @@ const AccountBox = () => {
   }
 
   return (
-    <>
+    <div className='z-50'>
       {session ? (
         <Menu>
           <MenuButton as={Box} p={1} className='cursor-pointer'>
@@ -32,13 +32,13 @@ const AccountBox = () => {
               sx={{bg: 'neutral.900'}} 
               className='hover:text-neutral-100 transition duration-300'
             >
-              <Link href="/dashboard/client/profile">Moje Konto</Link>
+              <Link href="/dashboard/client">Moje Konto</Link>
             </MenuItem>
             <MenuItem 
               sx={{bg: 'neutral.900'}} 
               className='hover:text-neutral-100 transition duration-300'
             >
-              <Link href="/dashboard/client">Panel</Link>
+              <Link href="/dashboard">Panel</Link>
             </MenuItem>
             <MenuItem 
               sx={{bg: 'neutral.900', color: 'red.800'}} 
@@ -64,7 +64,7 @@ const AccountBox = () => {
           <Link href='/login'>Zaloguj się</Link>
         </Button>
       )}
-    </>
+    </div>
   );
 };
 

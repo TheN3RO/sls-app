@@ -4,11 +4,15 @@ import { MdLogout, MdOutlineScoreboard, MdOutlineSpaceDashboard } from 'react-ic
 import { PiRanking } from 'react-icons/pi';
 import { List, ListIcon, ListItem } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import styles from '../../../styles/CompetitorSideBar.module.css';
+import styles from '../../../styles/SideBar.module.css';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-const CompetitorSideBar = () => {
+interface CompetitorSideBarProps {
+  module: (module: string) => void;
+}
+
+const CompetitorSideBar = ({ onSelect }: { onSelect: (page: string) => void }) => {
   const router = useRouter();
 
   const [isHovered, setIsHovered] = useState(false);
@@ -48,15 +52,18 @@ const CompetitorSideBar = () => {
 
       <div className='flex-grow flex flex-col'>
       <List spacing={5} className='w-full flex-grow flex flex-col m-5'>
-        <ListItem className={`flex items-center hover:text-white group ${styles.listItemTextShadow}`}>
+        <ListItem className={`flex items-center hover:text-white group ${styles.listItemTextShadow}`}
+          onClick={() => onSelect('competitor/Panel')}>
           <ListIcon as={MdOutlineSpaceDashboard} className='text-gray-300 group-hover:text-white' w={8} h={8} />
           {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Panel</span>}
         </ListItem>
-        <ListItem className={`flex items-center hover:text-white group ${styles.listItemTextShadow}`}>
+        <ListItem className={`flex items-center hover:text-white group ${styles.listItemTextShadow}`}
+        onClick={() => onSelect('competitor/PlayerScore')}>
           <ListIcon as={MdOutlineScoreboard} className='text-gray-300 group-hover:text-white' w={8} h={8} />
           {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Moje Wyniki</span>}
         </ListItem>
-        <ListItem className={`flex items-center hover:text-white group ${styles.listItemTextShadow}`}>
+        <ListItem className={`flex items-center hover:text-white group ${styles.listItemTextShadow}`}
+        onClick={() => onSelect('common/Ranking')}>
           <ListIcon as={PiRanking} className='text-gray-300 group-hover:text-white' w={8} h={8} />
           {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Ranking</span>}
         </ListItem>

@@ -5,7 +5,12 @@ import { DashboardHeader } from "@/components/dashboard/common";
 import { CompetitorSideBar } from "@/components/dashboard/competitor";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { use, useEffect, useState } from "react";
+import { ModeratorSideBar } from "@/components/dashboard/moderator";
+import { AdminSideBar } from "@/components/dashboard/admin";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@chakra-ui/react";
+import Image from 'next/image';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,25 +18,87 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  const [selectedModule, setSelectedModule] = useState<string | null>(null);
+  const [ Module, setModule] = useState<React.ComponentType | null>(null);
+
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login');
+    if (status === "authenticated" && session?.user.role) {
+      setSelectedModule(() => {
+        switch (session.user.role) {
+          case "moderator":
+            return "moderator/Panel";
+          case "admin":
+            return "admin/Panel";
+          default:
+            return "competitor/Panel";
+        }
+      });
     }
-  }, [status, router]);
-  
+
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, session?.user.role, router]);
+
+  useEffect(() => {
+    if (selectedModule) {
+      loadModule(selectedModule);
+    }
+  }, [selectedModule]);
+
+  const loadModule = async (modulePath: string) => {
+    const DynamicModule = dynamic(() => import(`../../components/dashboard/${modulePath}`));
+    setModule(() => DynamicModule);
+  };
+
+  // Loading skeleton
+  if (status === "loading") {
+    return (
+      <html lang="en">
+        <body className={inter.className}>
+          <Providers>
+            <main className="bg-neutral-950 text-gray-200">
+              <div className="flex">
+                <Skeleton width="72px" className="h-screen" />
+                <div className="w-full">
+                  <DashboardHeader />
+                  <Skeleton height="400px" className="m-3" />
+                  {children}
+                </div>
+              </div>
+            </main>
+            <Footer />
+          </Providers>
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers>
           <main className="bg-neutral-950 text-gray-200">
             <div className="flex">
-              {session?.user.role === 'moderator' ? null : <CompetitorSideBar /> }
-              <div className="w-full">
+              {(() => {
+                switch (session?.user.role) {
+                  case "moderator":
+                    return <ModeratorSideBar onSelect={setSelectedModule} />;
+                  case "admin":
+                    return <AdminSideBar onSelect={setSelectedModule} />;
+                  default:
+                    return <CompetitorSideBar onSelect={setSelectedModule} />;
+                }
+              })()}
+              <div className="w-full z-10 relative">
                 <DashboardHeader />
-                {children}
+                <div className="z-10">
+                  {Module ? <Module /> : <Skeleton height="400px" className="m-3" />} {/* Fallback skeleton */}
+                  {children}
+                </div>
               </div>
             </div>
-          </main> 
+          </main>
           <Footer />
         </Providers>
       </body>

@@ -1,6 +1,7 @@
+import { ClientProfile } from "@/components/dashboard/common";
 
-export default function ClientDashboardPage() {
-  return (
-    <div></div>
-  );
+export default function ClientProfilePage() {
+    return (
+      <ClientProfile />
+    );
 }
