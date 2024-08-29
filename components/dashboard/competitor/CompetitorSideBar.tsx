@@ -70,7 +70,7 @@ const CompetitorSideBar = ({ onSelect }: { onSelect: (page: string) => void }) =
 
         <div className='flex-grow'></div>
         <ListItem 
-          className={`flex items-center mb-3 cursor-pointer hover:text-red-700 group ${styles.listItemTextShadowRed}`}
+          className={`flex items-center cursor-pointer hover:text-red-700 group ${styles.listItemTextShadowRed}`}
           onClick={() => {
             signOut()
             router.push('/');

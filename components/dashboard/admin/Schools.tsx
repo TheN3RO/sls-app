@@ -5,14 +5,7 @@ import Image from 'next/image';
 import { Checkbox, Text, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Card, Heading, CardBody, Divider, Stack, ButtonGroup, CardFooter } from '@chakra-ui/react';
 import AddSchoolForm from './AddSchoolForm';
 import { FormikProps } from 'formik';
-
-interface School {
-  _id: string;
-  image: string;
-  name: string;
-  short: string;
-  address: string;
-}
+import { School } from '@/types';
 
 const Schools = () => {
 	const formikRef = useRef<FormikProps<{ image: string; name: string; short: string; address: string; }>>(null);
@@ -84,7 +77,7 @@ const Schools = () => {
         width={1920} height={1080} 
         className='absolute top-0 left-0'
         objectFit='contain'/>
-      <div className='relative z-10 bg-neutral-900/70 m-5 p-5 rounded-lg h-screen'>
+      <div className='relative z-10 bg-neutral-900/70 m-5 p-5 rounded-lg min-h-[800px]'>
         <div className='flex gap-10'>
           <h1 className='text-4xl font-bold text-neutral-100'>Szkoły</h1>
           <div className='flex flex-grow justify-end gap-3'>

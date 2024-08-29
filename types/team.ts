@@ -11,8 +11,10 @@ export interface Player {
 }
 
 export interface Team {
-    name: string;
-    school: string;
+    schoolId: Object;
     index: number;
-    team: Player[];
+    shortName: string;
+    moderator: string;
+    mainPlayers: Player[];
+    reservePlayers: Player[];
 }

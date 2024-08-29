@@ -24,7 +24,8 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const client = await clientPromise;
   const db = client.db();
-  const collection = db.collection('schools');
+  const schoolsCollection = db.collection('schools');
+  const teamsCollection = db.collection('teams');
 
   try {
     const formData = await req.formData();
@@ -48,11 +49,28 @@ export async function POST(req: NextRequest) {
       name,
       short,
       address,
-      image: newFileName
+      image: newFileName,
+      createdAt: new Date()
     };
 
-    await collection.insertOne(newSchool);
-    return NextResponse.json({ message: 'School added successfully' }, { status: 200 });
+    // Insert the new school document
+    const result = await schoolsCollection.insertOne(newSchool);
+    const schoolId = result.insertedId;
+
+    // Create the new team document with a reference to the school ID
+    const newTeam = {
+      schoolId: new ObjectId(schoolId),
+      index: 0,
+      shortName: short,
+      moderator: '',
+      mainPlayers: [],
+      reservePlayers: [],
+      createdAt: new Date()
+    };
+
+    await teamsCollection.insertOne(newTeam);
+
+    return NextResponse.json({ message: 'School and team added successfully' }, { status: 200 });
   } catch (error) {
     console.error('Error handling POST request:', error);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });

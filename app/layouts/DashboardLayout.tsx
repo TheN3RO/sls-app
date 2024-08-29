@@ -22,17 +22,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [ Module, setModule] = useState<React.ComponentType | null>(null);
 
   useEffect(() => {
-    if (status === "authenticated" && session?.user.role) {
-      setSelectedModule(() => {
-        switch (session.user.role) {
-          case "moderator":
-            return "moderator/Panel";
-          case "admin":
-            return "admin/Panel";
-          default:
-            return "competitor/Panel";
-        }
-      });
+    const savedModule = localStorage.getItem("selectedModule");
+    if (savedModule) {
+      setSelectedModule(savedModule);
+    } else {
+      if (status === "authenticated" && session?.user.role) {
+        setSelectedModule(() => {
+          switch (session.user.role) {
+            case "moderator":
+              return "moderator/Panel";
+            case "admin":
+              return "admin/Panel";
+            default:
+              return "competitor/Panel";
+          }
+        });
+      }
     }
 
     if (status === "unauthenticated") {
@@ -42,6 +47,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   useEffect(() => {
     if (selectedModule) {
+      localStorage.setItem("selectedModule", selectedModule);
       loadModule(selectedModule);
     }
   }, [selectedModule]);
@@ -78,8 +84,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <main className="bg-neutral-950 text-gray-200">
-            <div className="flex">
+          <main className="bg-neutral-950 text-gray-200 h-screen overflow-hidden">
+            <div className="flex h-full">
               {(() => {
                 switch (session?.user.role) {
                   case "moderator":
@@ -90,16 +96,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     return <CompetitorSideBar onSelect={setSelectedModule} />;
                 }
               })()}
-              <div className="w-full z-10 relative">
+              <div className="w-full z-10 relative flex flex-col h-full">
                 <DashboardHeader />
-                <div className="z-10">
+                <div className="z-10 flex-1 overflow-auto">
                   {Module ? <Module /> : <Skeleton height="400px" className="m-3" />} {/* Fallback skeleton */}
                   {children}
+                  <Footer />
                 </div>
               </div>
             </div>
           </main>
-          <Footer />
         </Providers>
       </body>
     </html>
