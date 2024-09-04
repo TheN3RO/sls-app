@@ -1,5 +1,5 @@
 
-export default function ClientDashboardPage() {
+export default function DashboardPage() {
     return (
       <></>
     );
