@@ -2,18 +2,26 @@
 
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { School } from '@/types';
+import { ISchool } from '@/types';
 import { Text, Button, Card, CardBody, CardFooter, Divider } from '@chakra-ui/react';
 import TeamSlots from './TeamSlots';
-import { Team } from '@/types/team';
+import { ITeam } from '@/types';
 
 const Teams = () => {
-	const [ schools, setSchools ] = useState<School[]>([]);
-	const [ selectedTeam, setSelectedTeam ] = useState<Team>();
+	const [ schools, setSchools ] = useState<ISchool[]>([]);
+	const [ selectedTeam, setSelectedTeam ] = useState<ITeam>();
 
   const selectTeam = async (ID: string) => {
     const teams = await fetchTeams();
-    setSelectedTeam(teams.find((team: Team) => team.schoolId === ID));
+    setSelectedTeam(teams.find((team: ITeam) => String(team._schoolId) === ID));
+  };
+
+  const fetchTeamPlayers = async () => {
+    const response = await fetch('/api/team-players');
+    if (!response.ok) {
+      throw new Error('Failed to fetch team players');
+    }
+    return response.json();
   };
 
   const fetchTeams = async () => {
@@ -57,14 +65,15 @@ const Teams = () => {
           <h1 className='text-4xl font-bold text-neutral-100'>{selectedTeam ? (
            <>Drużyna - <span className='text-blue-600 font-bold'>{selectedTeam.shortName}</span></>
           ) : "Drużyny" }</h1>
-          <Button variant='solid' colorScheme='blue' className='ml-auto'
-            onClick={() => setSelectedTeam(undefined) }
-          >
-            Zapisz
-          </Button>
+          {selectedTeam ? (
+            <Button variant='solid' colorScheme='blue' className='ml-auto'
+              onClick={() => {setSelectedTeam(undefined)}}>
+              Zamknij
+            </Button>
+          ) : null}
         </div>
         {selectedTeam ? (
-          <TeamSlots />
+          <TeamSlots selectedTeam={selectedTeam} />
         ) : (
           <div className='flex justify-start flex-wrap gap-5 mt-5'>
             {schools.map((school, index) => (
@@ -85,7 +94,7 @@ const Teams = () => {
                   <Divider />
                   <CardFooter>
                     <Button variant='solid' colorScheme='blue'
-                      onClick={() => selectTeam(school._id) }
+                      onClick={() => selectTeam(String(school._id)) }
                     >
                       Otwórz
                     </Button>

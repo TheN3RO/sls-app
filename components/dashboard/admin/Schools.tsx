@@ -5,13 +5,13 @@ import Image from 'next/image';
 import { Checkbox, Text, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Card, Heading, CardBody, Divider, Stack, ButtonGroup, CardFooter } from '@chakra-ui/react';
 import AddSchoolForm from './AddSchoolForm';
 import { FormikProps } from 'formik';
-import { School } from '@/types';
+import { ISchool } from '@/types';
 
 const Schools = () => {
 	const formikRef = useRef<FormikProps<{ image: string; name: string; short: string; address: string; }>>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-	const [ schools, setSchools ] = useState<School[]>([]);
+	const [ schools, setSchools ] = useState<ISchool[]>([]);
 
 	const handleSubmit = () => {
     if (formikRef.current) {
@@ -19,7 +19,7 @@ const Schools = () => {
     }
   };
 
-	const handleEdit = async (id: string, updateData: Partial<School>) => {
+	const handleEdit = async (id: string, updateData: Partial<ISchool>) => {
     try {
       const response = await fetch(`/api/schools`, {
         method: 'PUT',
@@ -89,7 +89,7 @@ const Schools = () => {
 					{schools.map((school, index) => (
 						<Card maxW='sm' key={index}>
 							<CardBody className='relative'>
-								<Checkbox className='absolute top-0 left-0' value={school._id}></Checkbox>
+								<Checkbox className='absolute top-0 left-0' value={String(school._id)}></Checkbox>
 								<div className='min-h-[200px] flex justify-center items-center rounded-lg'>
 									<Image
 										src={`/images/schools/${school.image}`}
@@ -115,7 +115,7 @@ const Schools = () => {
 										Edytuj
 									</Button>
 									<Button variant='ghost' colorScheme='blue'
-										onClick={() => handleDelete(school._id)}
+										onClick={() => handleDelete(String(school._id))}
 									>
 										Usuń
 									</Button>

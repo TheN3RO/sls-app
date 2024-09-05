@@ -20,10 +20,8 @@ const LoginForm: React.FC = () => {
   const handleClick = () => setShow(!show)
 
   useEffect(() => {
-    if (session?.user?.role === 'admin') {
-      router.push('/dashboard/admin');
-    } else if (session) {
-      router.push('/dashboard/client');
+    if (session) {
+      router.push('/dashboard');
     }
   }, [session, router]);
 

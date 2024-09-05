@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { MdLogout, MdOutlineSchool, MdOutlineScoreboard, MdOutlineSpaceDashboard, MdPeopleOutline } from 'react-icons/md';
-import { PiGameControllerLight, PiRanking } from 'react-icons/pi';
+import { MdLogout, MdOutlineSchool, MdOutlineSpaceDashboard, MdPeopleOutline } from 'react-icons/md';
+import { PiGameControllerLight, PiPersonArmsSpread, PiRanking } from 'react-icons/pi';
 import { List, ListIcon, ListItem } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import styles from '../../../styles/SideBar.module.css';
@@ -54,6 +54,11 @@ const AdminSideBar = ({ onSelect }: { onSelect: (page: string) => void }) => {
         onClick={() => onSelect('admin/Panel')}>
           <ListIcon as={MdOutlineSpaceDashboard} className='text-gray-300 group-hover:text-white' w={8} h={8} />
           {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Panel</span>}
+        </ListItem>
+        <ListItem className={`flex items-center cursor-pointer hover:text-white group ${styles.listItemTextShadow}`}
+        onClick={() => onSelect('admin/Users')}>
+          <ListIcon as={PiPersonArmsSpread} className='text-gray-300 group-hover:text-white' w={8} h={8} />
+          {(isHovered && isHalfway) && <span className='ml-4 text-gray-300 group-hover:text-white whitespace-nowrap'>Gracze</span>}
         </ListItem>
         <ListItem className={`flex items-center cursor-pointer hover:text-white group ${styles.listItemTextShadow}`}
         onClick={() => onSelect('admin/Matches')}>

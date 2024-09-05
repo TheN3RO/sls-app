@@ -1,25 +1,61 @@
-import { Avatar, Divider, List, ListItem } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import { Avatar, Divider, List, ListItem, Skeleton } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd'
+import { SlotPlayer } from '@/types/team';
+import MainSlot from './roleSlots/MainSlot';
+import SubSlot from './roleSlots/SubSlot';
+import { ITeam } from '@/types';
 
-interface Player {
-  id: string;
-  name: string;
-  role?: 'moderator' | 'main' | 'sub' | undefined;
+const fetchTeamPlayers = async (teamId: string) => {
+  const response = await fetch(`/api/team-players?_teamId=${teamId}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch team players');
+  }
+  return response.json();
+};
+
+interface TeamSlotsProps {
+  selectedTeam?: ITeam;
 }
 
-const initialPlayers: Player[] = [
-  { id: '1', name: 'Kacper', role: undefined },
-  { id: '2', name: 'Julka', role: undefined  },
-  { id: '3', name: 'Maciej', role: undefined  },
-  { id: '4', name: 'Krystian', role: undefined  },
-  { id: '5', name: 'Miłosz', role: undefined  },
-  { id: '6', name: 'Artur', role: undefined  },
-  { id: '7', name: 'Wiktor', role: undefined  },
-];
+const TeamSlots: React.FC<TeamSlotsProps> = ({ selectedTeam }) => {
+  const [teamPlayers, setTeamPlayers] = useState<SlotPlayer[]>([]);
+  const [loading, setLoading] = useState(true);
 
-const TeamSlots = () => {
-  const [teamPlayers, setTeamPlayers] = useState<Player[]>(initialPlayers);
+  const editPlayerRole = async (id: string, role: string | undefined) => {
+    try {
+      const response = await fetch(`/api/team-players`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, ...{ teamRole: role} }),
+      });
+      if(response.ok) {
+        console.log('Player role updated successfully');
+      }
+    } catch (error) {
+      console.error('Failed to update player role:', error);
+    }
+  }
+
+  useEffect(() => {
+    const loadTeamPlayers = async () => {
+      try {
+        const players = await fetchTeamPlayers(String(selectedTeam?._id));
+        const slotPlayers: SlotPlayer[] = players.map((player: any) => ({
+          id: player._id,
+          name: player.name,
+          role: player.teamRole,
+        }));
+        setTeamPlayers(slotPlayers);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTeamPlayers();
+  }, [selectedTeam]);
 
   const handleOnDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -43,10 +79,23 @@ const TeamSlots = () => {
         movedPlayer.role = undefined;
     }
 
-    console.log(movedPlayer, source.index, destination.droppableId);
-
+    editPlayerRole( movedPlayer.id, movedPlayer.role);
     updatedPlayers[source.index] = movedPlayer;
     setTeamPlayers(updatedPlayers);
+  }
+
+  const removePlayerRole = (playerId: string) => {
+    const updatedPlayers = teamPlayers.map(player => 
+      player.id === playerId ? { ...player, role: undefined } : player
+    );
+    editPlayerRole( playerId, undefined );
+    setTeamPlayers(updatedPlayers);
+  }
+
+  if (loading) {
+    return (
+      <Skeleton height='200px' />
+    );
   }
 
   return (
@@ -82,80 +131,12 @@ const TeamSlots = () => {
         <Divider orientation='vertical' height="630px" borderColor="gray.400" className='mx-3'/>
         <div className='flex flex-col items-center justify-center flex-grow mx-5 gap-10'>
           <div className='space-y-1'>
-            <span>Moderator</span>
-            <Droppable droppableId='moderator'>
-              {(provided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps} className='border border-neutral-800 rounded-lg p-3 w-64 h-20'>
-                  {Array.from({ length: 1 }).map((_, index) => (
-                    <div key={index} className='border border-neutral-800 rounded-lg p-3 w-64 h-20'>
-                      {teamPlayers.filter(player => player.role === 'moderator')[index] ? (
-                        <>
-                          <Avatar name={teamPlayers.filter(player => player.role === 'moderator')[index].name} />
-                          <span className='ml-4'>{teamPlayers.filter(player => player.role === 'moderator')[index].name}</span>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </div>
-          <div className='space-y-1'>
             <span>Główni gracze</span>
-            <Droppable droppableId='mainPlayers'>
-              {(provided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps} className='flex flex-wrap justify-center gap-3'>
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <div key={index} className='border border-neutral-800 rounded-lg p-3 w-64 h-20'>
-                      {teamPlayers.filter(player => player.role === 'main')[index] ? (
-                        <>
-                          <Avatar name={teamPlayers.filter(player => player.role === 'main')[index].name} />
-                          <span className='ml-4'>{teamPlayers.filter(player => player.role === 'main')[index].name}</span>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+            <MainSlot teamPlayers={teamPlayers} removePlayerRole={removePlayerRole} />
           </div>
           <div className='space-y-1'>
             <span>Rezerwowi gracze</span>
-            <Droppable droppableId='subPlayers'>
-              {(provided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps} className='flex flex-wrap justify-center gap-3'>
-                  {Array.from({ length: 2 }).map((_, index) => {
-                    const player = teamPlayers.filter(player => player.role === 'sub')[index];
-                    return (
-                      <div key={index} className='border border-neutral-800 rounded-lg p-3 w-64 h-20'>
-                        {player ? (
-                          <Draggable draggableId={player.id} index={Number(player.id)}>
-                            {(provided) => (
-                              <div ref={provided.innerRef} 
-                                {...provided.draggableProps} 
-                                {...provided.dragHandleProps}
-                              >
-                                <Avatar name={player.name} />
-                                <span className='ml-4'>{player.name}</span>
-                              </div>
-                            )}
-                          </Draggable>
-                        ) : (
-                          <></>
-                        )}
-                      </div>
-                    );
-                  })}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+            <SubSlot teamPlayers={teamPlayers} removePlayerRole={removePlayerRole} />
           </div>
         </div>
       </DragDropContext>

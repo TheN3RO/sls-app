@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import path from 'path';
 import { promises as fs } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
+import { ISchool, ITeam } from '@/types';
 
 // Handle GET requests
 export async function GET(req: NextRequest) {
@@ -45,7 +46,8 @@ export async function POST(req: NextRequest) {
     const imageBuffer = Buffer.from(await image.arrayBuffer());
     await fs.writeFile(imagePath, imageBuffer);
 
-    const newSchool = {
+    const newSchool: ISchool = {
+      _id: new ObjectId(),
       name,
       short,
       address,
@@ -58,14 +60,11 @@ export async function POST(req: NextRequest) {
     const schoolId = result.insertedId;
 
     // Create the new team document with a reference to the school ID
-    const newTeam = {
-      schoolId: new ObjectId(schoolId),
+    const newTeam: ITeam = {
+      _id: new ObjectId(),
+      _schoolId: new ObjectId(schoolId),
       index: 0,
       shortName: short,
-      moderator: '',
-      mainPlayers: [],
-      reservePlayers: [],
-      createdAt: new Date()
     };
 
     await teamsCollection.insertOne(newTeam);

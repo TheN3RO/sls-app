@@ -1,20 +1,7 @@
-export interface Player {
-    name: string;
-    surname: string;
-    class: number;
-    age: number;
-    email: string;
-    points: number;
-    games: number;
-    wins: number;
-    loses: number;
-}
+import { Key } from "react";
 
-export interface Team {
-    schoolId: Object;
-    index: number;
-    shortName: string;
-    moderator: string;
-    mainPlayers: Player[];
-    reservePlayers: Player[];
+export interface SlotPlayer {
+    id: string;
+    name: string;
+    role?: 'moderator' | 'main' | 'sub' | undefined;
 }

@@ -5,8 +5,13 @@ import * as Yup from 'yup';
 import React, { useEffect, useState } from 'react'
 import { Button, FormControl, FormErrorMessage, FormLabel, IconButton, Input, InputGroup, InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Select, Stack, Text, useClipboard } from '@chakra-ui/react';
 import { FiCopy } from 'react-icons/fi';
+import { ITeam } from '@/types';
 
-const RegisterForm: React.FC = () => {
+interface RegisterFormProps {
+  onRegisterSuccess: () => void;
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({onRegisterSuccess}) => {
 	const validationSchema = Yup.object().shape({
 		email: Yup.string().email('Invalid email').required('Email is required'),
 		name: Yup.string().required('Name is required'),
@@ -35,8 +40,26 @@ const RegisterForm: React.FC = () => {
 
   const [accountType, setAccountType] = useState('provision');
   const [generatedPassword, setGeneratedPassword] = useState('');
+  const [teams, setTeams] = useState<ITeam[]>([]);
 
 	const { hasCopied, onCopy } = useClipboard(generatedPassword);
+
+  const fetchTeams = async () => {
+		const response = await fetch('/api/teams');
+		if (!response.ok) {
+			throw new Error('Failed to fetch teams');
+		}
+		return response.json();
+	};
+
+  const loadTeams = async () => {
+    try {
+      const data = await fetchTeams();
+      setTeams(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 	const generatePassword = (length: number) => {
 		const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -52,6 +75,7 @@ const RegisterForm: React.FC = () => {
   
   useEffect(() => {
     generatePassword(15);
+    loadTeams();
   }, []);
   
   return (
@@ -69,10 +93,11 @@ const RegisterForm: React.FC = () => {
       validationSchema={validationSchema}
       onSubmit={async (values) => {
         const newUser = {
+          _teamId: values.school,
           email: values.email,
           name: values.name,
-          role: values.role,
-          school: values.school,
+          role: (["competitor", "moderator", "admin"].includes(values.role) ? values.role : "competitor") as "competitor" | "moderator" | "admin",
+          school: values.school ? teams.filter((team) => String(team._id) == values.school)[0]?.shortName : undefined,          
           isReRegistered: values.accountType === "static" ? true : false,
           password: values.accountType === "static" ? values.password : generatedPassword,
         };
@@ -86,13 +111,13 @@ const RegisterForm: React.FC = () => {
     
         if (data.error) {
           console.error(data.error);
+        } else {
+          onRegisterSuccess(); // Call the callback on successful registration
         }
-    
-        console.log("Account created!");
       }}
     >
       {({ values, errors, touched, setFieldValue, isSubmitting }) => (
-        <Form className='min-w-[150px] w-full max-w-[350px] space-y-2'>
+        <Form className='min-w-[150px] w-full max-w-[500px] space-y-2'>
           <Field name="email">
             {({ field }: any) => (
               <FormControl isInvalid={!!(errors.email && touched.email)}>
@@ -138,9 +163,9 @@ const RegisterForm: React.FC = () => {
                     value={values.school}
                     placeholder="Wybierz szkołe"
                   >
-                    <option value="ZSEL">ZSEL</option>
-                    <option value="VLO">VLO</option>
-                    <option value="IILO">IILO</option>
+                    {teams.map((team: ITeam) => (
+                      <option key={Number(team._id)} value={String(team._id)}>{team.shortName}</option>
+                    ))}
                   </Select>
                   <FormErrorMessage>{errors.school}</FormErrorMessage>
                 </FormControl>
@@ -249,6 +274,7 @@ const RegisterForm: React.FC = () => {
 
 					<div className="py-7 flex justify-center">
             <Button
+              colorScheme='purple'
               isLoading={isSubmitting}
               type='submit'
               className='p-2 rounded-lg w-full shadow-lg shadow-violet-400/50'>
