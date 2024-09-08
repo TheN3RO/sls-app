@@ -1,16 +1,15 @@
 import { Inter } from "next/font/google";
-import { Providers } from "../providers";
 import { Footer } from "@/components/common";
 import { DashboardHeader } from "@/components/dashboard/common";
 import { CompetitorSideBar } from "@/components/dashboard/competitor";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ModeratorSideBar } from "@/components/dashboard/moderator";
 import { AdminSideBar } from "@/components/dashboard/admin";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@chakra-ui/react";
-import Image from 'next/image';
+const Providers = dynamic(() => import('../providers'), { ssr: false })
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -50,6 +50,7 @@ const Hero = () => {
         <Image 
           src='/images/chess-image-with-jagged-edges-perfect-composition-beautiful-detailed-intricate-insanely-detailed-o.png' 
           alt='decoration2' 
+          priority
           width={1200} 
           height={480} 
           className={`rounded-lg ${styles.imageBorderAnimation}`} 

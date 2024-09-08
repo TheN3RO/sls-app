@@ -5,7 +5,7 @@ import CustomButton from '../common/customButton'
 
 const BaseInfo = () => {
   return (
-    <section className='bg-orange-300'>
+    <section className='bg-orange-300 text-black'>
         <div className='container mx-auto pt-[50px]'>
             <div className='text-gray-600 my-2'>Informacje</div>
             <div className='w-1/2'>

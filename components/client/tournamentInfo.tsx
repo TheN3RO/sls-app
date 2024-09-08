@@ -8,14 +8,14 @@ const TournamentInfo = () => {
             <div className='w-1/2 p-3 py-20'>
                 <span className='text-black text-5xl font-bold '>Prestiż, nagrody i niezapomniane doświadczenie dla uczestników turnieju szachowego</span>
                 <p className='my-6 text-gray-500'>Dołącz do naszego prestiżowego turnieju szachowego i zdobądź nie tylko nagrody, ale także cenne doświadczenie.</p>
-                <div className='flex gap-3 mt-20'>
+                <div className='flex gap-3 mt-20 text-black'>
                     <div className='bg-neutral-100 p-2'>
                         <span className='text-xl black'>Prestiż</span>
-                        <p className='text-sm text-black my-3'>Zdobądź prestiżowy tytuł mistrza szachowego i zyskaj szacunek w świecie szachów.</p>
+                        <p className='text-sm my-3'>Zdobądź prestiżowy tytuł mistrza szachowego i zyskaj szacunek w świecie szachów.</p>
                     </div>
                     <div className='bg-neutral-100 p-2'>
-                        <span className='text-xl text-black'>Nagrody</span>
-                        <p className='text-sm text-black my-3'>Wygraj atrakcyjne nagrody, takie jak puchary, medale i vouchery na zakupy.</p>
+                        <span className='text-xl '>Nagrody</span>
+                        <p className='text-sm my-3'>Wygraj atrakcyjne nagrody, takie jak puchary, medale i vouchery na zakupy.</p>
                     </div>
                 </div>
             </div>

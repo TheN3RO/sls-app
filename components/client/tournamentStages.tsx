@@ -6,11 +6,11 @@ const TournamentStages = () => {
     <section className='bg-black'>
         <div className='container mx-auto flex flex-wrap'>
             <div className='w-1/2 p-3 py-20'>
-                <div className='bg-white text-lg font-medium text-nowrap w-min p-0.5 mb-3'>ETAPY TURNIEJU</div>
+                <div className='bg-white text-black text-lg font-medium text-nowrap w-min p-0.5 mb-3 px-2'>ETAPY TURNIEJU</div>
                 <div className='text-6xl font-bold text-indigo-500'>Jak działa nasz turniej szachowy</div>
                 <div className='flex gap-5 py-10'>
                     <div className='w-[3px] bg-gradient-to-b from-black to-fuchsia-500'></div>
-                    <div className='flex gap-10 flex-col'>
+                    <div className='flex gap-14 flex-col text-black my-10'>
                         <div className='flex gap-3'>
                             <div>
                                 <div className='bg-white w-10 h-10 rounded-full flex items-center justify-center mt-2'>1</div>

@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
-import { Providers } from "../providers";
 import { Footer, Header } from "@/components/common";
+import dynamic from "next/dynamic";
+const Providers = dynamic(() => import('../providers'), { ssr: false })
 
 const inter = Inter({ subsets: ["latin"] });
 
