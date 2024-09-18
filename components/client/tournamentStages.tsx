@@ -4,8 +4,8 @@ import React from 'react'
 const TournamentStages = () => {
   return (
     <section className='bg-black'>
-        <div className='container mx-auto flex flex-wrap'>
-            <div className='w-1/2 p-3 py-20'>
+        <div className='container mx-auto flex flex-wrap space-y-10 px-3 py-20'>
+            <div className='w-full md:w-1/2'>
                 <div className='bg-white text-black text-lg font-medium text-nowrap w-min p-0.5 mb-3 px-2'>ETAPY TURNIEJU</div>
                 <div className='text-6xl font-bold text-indigo-500'>Jak działa nasz turniej szachowy</div>
                 <div className='flex gap-5 py-10'>
@@ -41,7 +41,7 @@ const TournamentStages = () => {
                     </div>
                 </div>
             </div>
-            <div className='w-1/2 p-3 py-20'>
+            <div className='w-full md:w-1/2'>
                 <Image src='/images/chess-pieces-imbued-with-a-broken-glass-effect-floating-in-void-with-no-background-embody-mythical.jpeg' alt='tournament stages image' width={500} height={500} className='rounded-md w-full h-full object-cover'/>
             </div>
         </div>

@@ -12,7 +12,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <Header />
           {children}
-          <Footer />
+          <Footer mode="full" />
         </Providers>
       </body>
     </html>

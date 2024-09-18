@@ -55,11 +55,6 @@ const Teams = () => {
 
   return (
     <div className='relative'>
-      <Image alt='dark background with light rectangles'  
-        src="/background/light-dark-rect-bg.jpg" 
-        width={1920} height={1080} 
-        className='absolute top-0 left-0'
-        objectFit='contain'/>
       <div className='relative z-10 bg-neutral-900/70 m-5 p-5 rounded-lg min-h-[800px]'>
         <div className='flex gap-10'>
           <h1 className='text-4xl font-bold text-neutral-100'>{selectedTeam ? (

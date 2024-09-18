@@ -9,6 +9,7 @@ import { ModeratorSideBar } from "@/components/dashboard/moderator";
 import { AdminSideBar } from "@/components/dashboard/admin";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@chakra-ui/react";
+import Image from "next/image";
 const Providers = dynamic(() => import('../providers'), { ssr: false })
 
 const inter = Inter({ subsets: ["latin"] });
@@ -72,7 +73,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </div>
               </div>
             </main>
-            <Footer />
+            <Footer mode='compact' />
           </Providers>
         </body>
       </html>
@@ -97,12 +98,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               })()}
               <div className="w-full z-10 relative flex flex-col h-full">
                 <DashboardHeader />
+                <Image alt='dark background with light rectangles'  
+                    src="/background/light-dark-rect-bg.jpg" 
+                    width={1920} height={1080} 
+                    className='absolute top-0 left-0'
+                    objectFit='contain'/>
                 <div className="z-10 flex-1 overflow-auto">
                   {Module ? <Module /> : <Skeleton height="400px" className="m-3" />} {/* Fallback skeleton */}
                   {children}
-                  <Footer />
                 </div>
-              </div>
+                <Footer mode="compact" />
+                </div>
             </div>
           </main>
         </Providers>

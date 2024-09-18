@@ -1,5 +1,5 @@
 import { meetingCombinations } from "@/constants";
-import { Player, Team } from "@/types/team";
+import { Player, Team } from "@/types";
 
 function generateMeetingCombinations(teams: Team[]): [Team, Team][][] {
     const meetings: [Team, Team][][] = [];

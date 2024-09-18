@@ -8,8 +8,8 @@ const Hero = () => {
 
   return (
     <section className='bg-gradient-to-b from-black to-indigo-600 text-center flex justify-center flex-col'>
-      <div className='relative px-48 pt-36 pb-12'>
-        <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col w-3/4'>
+      <div className='relative container mx-auto pt-36 pb-12'>
+        <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col w-full md:w-3/4'>
           <div className='w-full relative'>
             <div className={`flex justify-between mx-auto ${styles.decorationBlurTiny} relative `}>
               <Image src='/decoration/chess_klt45.svg' alt='decoration1' width={120} height={120} className='p-2 relative ' />

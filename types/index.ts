@@ -45,3 +45,10 @@ export interface ITeam {
     index: number;
     shortName: string;
 }
+
+export interface IShedule {
+    _id: ObjectId;
+    status: 'added' | 'deleted';
+    mode: 'not-started' | 'in-progress' | 'finished';
+    createdAt: Date;
+}

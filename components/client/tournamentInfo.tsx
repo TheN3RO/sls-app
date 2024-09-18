@@ -5,7 +5,7 @@ const TournamentInfo = () => {
   return (
     <section className='bg-white'>
         <div className='container mx-auto py-20 flex flex-wrap'>
-            <div className='w-1/2 p-3 py-20'>
+            <div className='w-full md:w-1/2 p-3 py-20'>
                 <span className='text-black text-5xl font-bold '>Prestiż, nagrody i niezapomniane doświadczenie dla uczestników turnieju szachowego</span>
                 <p className='my-6 text-gray-500'>Dołącz do naszego prestiżowego turnieju szachowego i zdobądź nie tylko nagrody, ale także cenne doświadczenie.</p>
                 <div className='flex gap-3 mt-20 text-black'>
@@ -19,7 +19,7 @@ const TournamentInfo = () => {
                     </div>
                 </div>
             </div>
-            <div className='w-1/2 p-3'>
+            <div className='w-full md:w-1/2 p-3'>
                 <Image src='/images/carousel_6.jpg' alt='tournament information image' width={500} height={500} className='rounded-md w-full h-full object-cover'/>
             </div>
         </div>
