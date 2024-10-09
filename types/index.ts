@@ -46,9 +46,7 @@ export interface ITeam {
     shortName: string;
 }
 
-export interface IShedule {
-    _id: ObjectId;
+export interface ISchedule {
     status: 'added' | 'deleted';
-    mode: 'not-started' | 'in-progress' | 'finished';
-    createdAt: Date;
+    data: []    
 }

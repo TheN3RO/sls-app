@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     // Save the image to a local directory (or use a storage service)
     const imagePath = path.join(process.cwd(), 'public', 'images', 'schools', newFileName);
     const imageBuffer = Buffer.from(await image.arrayBuffer());
-    await fs.writeFile(imagePath, imageBuffer);
+    await fs.writeFile(imagePath, new Uint8Array(imageBuffer));
 
     const newSchool: ISchool = {
       _id: new ObjectId(),

@@ -6,7 +6,7 @@ const AdminDashboard = () => {
   return (
     <div className='flex flex-col items-center bg-neutral-900'> 
       <Heading>AdminDashboard</Heading>
-      <RegisterForm />
+      <RegisterForm onRegisterSuccess={() => {}} />
     </div>
   )
 }

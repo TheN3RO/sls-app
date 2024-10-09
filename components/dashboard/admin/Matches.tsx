@@ -1,9 +1,11 @@
 import React from 'react'
-import Image from 'next/image'
 import { Badge, Button } from '@chakra-ui/react'
 import ScheduleManager from './ScheduleManager'
+import { useRouter } from 'next/navigation';
 
 const Matches = () => {
+  const router = useRouter();
+	
 	return (
 		<div className='relative'>
 			<div className='relative z-10 bg-neutral-900/70 m-5 p-5 rounded-lg min-h-[800px]'>
@@ -62,7 +64,7 @@ const Matches = () => {
 							border border-emerald-500 relative
 						'>
 							<span className='text-2xl'>Spotkanie 4</span>
-							<Button>Rozpocznij</Button>
+							<Button onClick={() => router.push('/dashboard/admin')}>Rozpocznij</Button>
 							<Badge variant='solid' colorScheme='gray'
 								className='p-1 absolute -bottom-3 left-1/2 translate-x-1/2'
 							>

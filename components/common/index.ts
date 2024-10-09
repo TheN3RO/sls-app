@@ -1,6 +1,6 @@
-import Header from "../common/header";
-import Footer from "../common/footer";
-import CustomButton from "../common/customButton";
+import Header from "./header";
+import Footer from "./footer";
+import CustomButton from "./customButton";
 import AccountBox from "./accountBox";
 
 export {
